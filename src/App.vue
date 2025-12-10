@@ -12,9 +12,17 @@ const users = reactive([
     address: 'HCM',
     gender: 0,
   },
+  {
+    id: 2,
+    name: 'Anh',
+    email: 'anh@gmail.com',
+    password: '111',
+    address: 'Vinh Long',
+    gender: 1,
+  },
 ]);
 
-const handleSaveUser = (user) => {
+const handleSaveUser = (newUser) => {
   newUser.id = Math.floor(Math.random() * 100) + 1
   users.push(newUser);
 };
@@ -33,16 +41,14 @@ const handleSelectUser = (user) => {
   <div class="container">
     <h1 class="text-center mb-4">QUẢN LÍ NHÂN VIÊN</h1>
     <div class="col-md-8">
-      <FormInputUser :user="currentUser" @save-user="handleSaveUser" @remove-user="handleRemoveUser" />
+      <FormInputUser @save-user="handleSaveUser"/>
     </div>
     <hr>
-    <div>
       <h3 class="mb-3">Danh sách:</h3>
-      <TableUser :users="users" @select-user="handleSelectUser" />
-      <div class="text-center text-muted" v-if="users.length == 0">
+      <TableUser :list-user="users"/>
+      <!-- <div class="text-center text-muted" v-if="users.length == 0">
         Không có!
-      </div>
-    </div>
+      </div> -->
   </div>
 </template>
 

@@ -37,13 +37,13 @@
 <script setup>
 import { reactive } from 'vue';
 const props = defineProps({
-    userList: {
+    user: {
         type: Object,
-        default: (null)
+        default: null
     }
 });
 
-const user = reactive({
+const formUser = reactive({
     id: -1,
     name: '',
     email: '',
@@ -51,8 +51,6 @@ const user = reactive({
     address: '',
     gender: '0'
 })
-
-const formUser = reactive({...user})
 
 const emit = defineEmits(['save-user', 'remove-user']);
 const saveUser = () => {
@@ -64,23 +62,23 @@ const saveUser = () => {
         alert("Vui lòng nhập đầy đủ thông tin !");
         return;
     }
-        emit('save-user', { ...user });
+        emit('save-user', { ...props.formUser });
         //reset
-        user.id = -1;
-        user.name = '';
-        user.email = '';
-        user.password = '';
-        user.address = '';
-        user.gender = '0';
+        formUser.id = -1;
+        formUser.name = '';
+        formUser.email = '';
+        formUser.password = '';
+        formUser.address = '';
+        formUser.gender = '0';
 };
-const removeUser = (index) => {
+const removeUser = (formUser) => {
     emit('remove-user');
     //reset
-    user.id = -1;
-    user.name = '';
-    user.email = '';
-    user.password = '';
-    user.address = '';
-    user.gender = '0'; 
+    formUser.id = -1;
+    formUser.name = '';
+    formUser.email = '';
+    formUser.password = '';
+    formUser.address = '';
+    formUser.gender = '0'; 
 } 
 </script>

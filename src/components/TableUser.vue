@@ -12,13 +12,13 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="user in listUser" :key="user.id" @click="selectUser(user)">
-                    <td>{{ info.id }}</td>
-                    <td>{{ info.name }}</td>
-                    <td>{{ info.email }}</td>
-                    <td>{{ info.password }}</td>
-                    <td>{{ info.address }}</td>
-                    <td>{{ info.gender }}</td>
+                <tr v-for="user in users" :key="user.id" @click="selectUser(userRow)" style="cursor: pointer;">
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.password }}</td>
+                    <td>{{ user.address }}</td>
+                    <td>{{ user.gender == 1 ? 'Nam' : 'Nữ'}}</td>
                 </tr>
             </tbody>
         </table>
@@ -28,13 +28,15 @@
 <script setup>
 import { defineEmits, defineProps } from 'vue';
 const props = defineProps({
-    listUser: {
+    users: {
         type: Array,
-        required: true
+        required: true,
+        default: () =>[]
     },
 });
 const emit = defineEmits(['select-user']);
-const selectUser = (user) => {
-    emit('select-user', {...user});
+const selectUser = (userId) => {
+    let userRow = props.users.find(e => e.id === userId);
+    emit('select-user', {...userRow});
 };
 </script>
