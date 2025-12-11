@@ -22,7 +22,16 @@ const users = reactive([
   },
 ]);
 
-const userSelected = ref(null);
+const userSelected = ref([
+  {
+    id: null,
+    name: '',
+    email: '',
+    password: '',
+    address: '',
+    gender: 0,
+  },
+]);
 
 const handleSaveUser = (formData) => {
   if (formData.id) {

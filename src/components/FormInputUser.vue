@@ -1,7 +1,7 @@
 <template>
     <div class="card p-4 mb-5 bg-light">
         <h3 class="mb-3">Thêm nhân viên</h3>
-        <form>
+        <form @submit.prevent="saveUser">
             <div class="mb-3">
                 <label class="form-label">Họ và tên</label>
                 <input type="text" class="form-control" v-model="formUser.name" required
@@ -30,7 +30,7 @@
                 </select>
             </div>
             <button type="button" class="btn btn-success" @click="saveUser">Lưu</button>
-            <button v-if="formUser.id" type="button" class="btn btn-warning" @click="removeUser">Xóa</button>
+            <button type="button" class="btn btn-warning" @click="removeUser">Xóa</button>
         </form>
     </div>
 </template>
