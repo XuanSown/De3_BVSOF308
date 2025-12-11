@@ -12,13 +12,13 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="user in users" :key="user.id" @click="selectUser(userRow)" style="cursor: pointer;">
+                <tr v-for="user in users" :key="user.id" @click="onSelectUser(user)" style="cursor: pointer;">
                     <td>{{ user.id }}</td>
                     <td>{{ user.name }}</td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.password }}</td>
                     <td>{{ user.address }}</td>
-                    <td>{{ user.gender == 1 ? 'Nam' : 'Nữ'}}</td>
+                    <td>{{ user.gender == 0 ? 'Nam' : 'Nữ'}}</td>
                 </tr>
             </tbody>
         </table>
@@ -35,8 +35,8 @@ const props = defineProps({
     },
 });
 const emit = defineEmits(['select-user']);
-const selectUser = (userId) => {
-    let userRow = props.users.find(e => e.id === userId);
-    emit('select-user', {...userRow});
+
+const onSelectUser = (user) => {
+    emit('select-user', user);
 };
 </script>

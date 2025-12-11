@@ -30,7 +30,7 @@
                 </select>
             </div>
             <button type="button" class="btn btn-success" @click="saveUser">Lưu</button>
-            <button type="button" class="btn btn-warning" @click="removeUser">Xóa</button>
+            <button v-if="formUser.id" type="button" class="btn btn-warning" @click="removeUser">Xóa</button>
         </form>
     </div>
 </template>
@@ -56,7 +56,7 @@ const formUser = reactive({
 // Hàm reset form về rỗng
 const resetForm = () => {
     formUser.id = null;
-    formUser.username = '';
+    formUser.name = '';
     formUser.email = '';
     formUser.password = '';
     formUser.address = '';
@@ -69,26 +69,26 @@ watch(() => props.userSelected, (newUser) => {
     } else {
         resetForm();
     }
-})
+});
 
 const emit = defineEmits(['save-user', 'remove-user']);
 const saveUser = () => {
-    if (formUser.name ||
-        formUser.email ||
-        formUser.password ||
-        formUser.address
+    if (!formUser.name ||
+        !formUser.email ||
+        !formUser.password ||
+        !formUser.address
     ) {
         alert("Vui lòng nhập đầy đủ thông tin !");
         return;
     }
     emit('save-user', { ...formUser });
-    //reset
-    formUser.id = -1;
-    formUser.name = '';
-    formUser.email = '';
-    formUser.password = '';
-    formUser.address = '';
-    formUser.gender = '0';
+    // //reset
+    // formUser.id = -1;
+    // formUser.name = '';
+    // formUser.email = '';
+    // formUser.password = '';
+    // formUser.address = '';
+    // formUser.gender = '0';
 };
 const removeUser = () => {
     if (confirm('Bạn chắc chắn muốn xóa')) {

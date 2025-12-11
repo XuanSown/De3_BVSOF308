@@ -36,20 +36,20 @@ const handleSaveUser = (formData) => {
     formData.id = Math.floor(Math.random() * 100) + 1
     users.push(formData);
   }
-  selectUser.value = null;
+  userSelected.value = null;
 };
 
 const handleRemoveUser = (userId) => {
   const userIndex = users.findIndex(e => e.id === userId)
   if (userIndex != -1) {
-    users.splice(index, 1);
+    users.splice(userIndex, 1);
   }
-  selectUser.value = null;
+  userSelected.value = null;
 };
 
 //khi chọn dòng trên table
 const handleSelectUser = (user) => {
-  selectUser.value = { ...user };
+  userSelected.value = { ...user };
 };
 
 </script>
