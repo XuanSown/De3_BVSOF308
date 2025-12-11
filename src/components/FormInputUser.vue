@@ -4,7 +4,8 @@
         <form>
             <div class="mb-3">
                 <label class="form-label">Họ và tên</label>
-                <input type="text" class="form-control" v-model="formUser.name" required placeholder="Nhập tên vào đây!">
+                <input type="text" class="form-control" v-model="formUser.name" required
+                    placeholder="Nhập tên vào đây!">
             </div>
             <div class="mb-3">
                 <label class="form-label">Email</label>
@@ -35,50 +36,63 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue';
+import { reactive, watch } from 'vue';
 const props = defineProps({
-    user: {
+    userSelected: {
         type: Object,
         default: null
     }
 });
 
 const formUser = reactive({
-    id: -1,
+    id: null,
     name: '',
     email: '',
     password: '',
     address: '',
     gender: '0'
+});
+
+// Hàm reset form về rỗng
+const resetForm = () => {
+    formUser.id = null;
+    formUser.username = '';
+    formUser.email = '';
+    formUser.password = '';
+    formUser.address = '';
+    formUser.gender = 1;
+};
+
+watch(() => props.userSelected, (newUser) => {
+    if (newUser) {
+        Object.assign(formUser, newUser)
+    } else {
+        resetForm();
+    }
 })
 
 const emit = defineEmits(['save-user', 'remove-user']);
 const saveUser = () => {
-    if (!props.formUser.name ||
-        !props.formUser.email ||
-        !props.formUser.password ||
-        !props.formUser.address
+    if (formUser.name ||
+        formUser.email ||
+        formUser.password ||
+        formUser.address
     ) {
         alert("Vui lòng nhập đầy đủ thông tin !");
         return;
     }
-        emit('save-user', { ...props.formUser });
-        //reset
-        formUser.id = -1;
-        formUser.name = '';
-        formUser.email = '';
-        formUser.password = '';
-        formUser.address = '';
-        formUser.gender = '0';
-};
-const removeUser = (formUser) => {
-    emit('remove-user');
+    emit('save-user', { ...formUser });
     //reset
     formUser.id = -1;
     formUser.name = '';
     formUser.email = '';
     formUser.password = '';
     formUser.address = '';
-    formUser.gender = '0'; 
-} 
+    formUser.gender = '0';
+};
+const removeUser = () => {
+    if (confirm('Bạn chắc chắn muốn xóa')) {
+        emit('remove-user', formUser.id);
+    }
+};
 </script>
